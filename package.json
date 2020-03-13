@@ -4,6 +4,7 @@
     "description": "Jenkins integration with vscode",
     "version": "0.0.4",
     "publisher": "paulvarache",
+    "repository": {},
     "engines": {
         "vscode": "^1.43.0"
     },
@@ -120,6 +121,11 @@
                     "type": "string",
                     "description": "Your jenkins user Token",
                     "default": ""
+                  },
+                  "jenkins.filter": {
+                      "type": "string",
+                      "description": "Filter for jobs",
+                      "default": ""
                   }
             }
         }
