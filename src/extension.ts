@@ -25,6 +25,7 @@ function getJenkinsTree() {
 }
 
 export function activate(context: vscode.ExtensionContext) {
+
     let tree;
 
     tree = getJenkinsTree();
@@ -32,7 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
     // Create 3 tree providers
     // Job displays the job matching the currently open editor
     // it is displayed in the Explorer view
-    const jobProvider = new JenkinsJobTreeViewProvider(context, tree);
+    const jobProvider = new JenkinsJobTreeViewProvider(context, tree, getJenkinsApi().filter);
     // Jobs will display all jenkins jobs from that instance, in the jenkins view
     const jobsProvider = new JenkinsTreeViewJobProvider(context, tree);
     // Nodes will display all jenkins nodes from that instance, in the jenkins view

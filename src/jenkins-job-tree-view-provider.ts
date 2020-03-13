@@ -11,10 +11,12 @@ export class JenkinsJobTreeViewProvider implements vscode.TreeDataProvider<Jenki
     private emitter = new vscode.EventEmitter<JenkinsTreeViewItem>();
     public onDidChangeTreeData : vscode.Event<JenkinsTreeViewItem>;
     public context : vscode.ExtensionContext;
-    constructor(context : vscode.ExtensionContext, tree : JenkinsTree) {
+    private filter : RegExp;
+    constructor(context : vscode.ExtensionContext, tree : JenkinsTree, filter : string) {
         this.context = context;
         this.onDidChangeTreeData = this.emitter.event;
         this.tree = tree;
+        this.filter = new RegExp(filter);
     }
     /**
      * Update the current workspace. This will try to find a matching job and update the tree if it does
@@ -41,6 +43,13 @@ export class JenkinsJobTreeViewProvider implements vscode.TreeDataProvider<Jenki
         this.findJobForName(this.workspaceName);
     }
     findJobForName(name : string) {
+
+        // jobs filter
+        // FIXME: not working
+        if (this.filter.test(name)) {
+          return;
+        }
+
         this.tree.search(name)
             .then((jobItem) => {
                 if (!jobItem) {

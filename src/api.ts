@@ -28,11 +28,13 @@ export class JenkinsApi {
     public host : string;
     public username : string;
     public token : string;
+    public filter : string;
     public headers : any;
-    constructor(host : string, username : string, token : string) {
+    constructor(host : string, username : string, token : string, filter : string) {
         this.host = host;
         this.username = username;
         this.token = token;
+        this.filter = filter
 
         const auth = new Buffer(`${this.username}:${this.token}`).toString('base64');
 
@@ -41,11 +43,11 @@ export class JenkinsApi {
         };
     }
     static getCurrent(config : vscode.WorkspaceConfiguration) {
-        const { endpoint, token, username } = config;
+        const { endpoint, token, username, filter } = config;
     
         const host = `https://${endpoint}`;
     
-        return new JenkinsApi(host, username, token);
+        return new JenkinsApi(host, username, token, filter);
     }
     buildUrl(id : string, ...args : any[]) {
         return `${this.host}${URLS[id](...args)}`;
